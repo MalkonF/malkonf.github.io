@@ -1,8 +1,19 @@
 body {
-	font-family: 'Gill Sans Extrabold', Helvetica, sans-serif;
-	padding: 5px;
-}
+    font-family: 'Work Sans', sans-serif;
+    padding: 6px;
+   }
+
+   h1{
+       font-size: 35px;
+   }
+   
+   h1, h2, h3, h4, h5, h6 {
+    font-family: 'Crimson Text', serif;
+   }
 
 dt {
 	font-weight: bold;
+}
+address p{
+    text-align: center;
 }
