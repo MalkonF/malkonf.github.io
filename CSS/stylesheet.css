@@ -1,16 +1,19 @@
-
 body {
 	font-family: 'Work Sans', sans-serif;
 	color: #00ff00;
-	padding: 6px;
+	padding: 10px;
 	background-color: #1c1c1c;
 }
 
 #home {
-	font-size: 20px;
+	font-size: 18px;
 	text-align: center;
-	margin-left: 60px;
-	margin-right: 60px;
+	margin-left: 70px;
+	margin-right: 70px;
+}
+
+#pgpleft{
+    text-align: left;
 }
 
 h1 {
@@ -27,21 +30,29 @@ h6 {
 }
 
 nav {
-    display: block;
-    width: 300px;
-    margin: 0 auto;
-    text-align: center;
-  }
+	display: block;
+	width: 350px;
+	margin: 0 auto;
+	text-align: center;
+}
 
 pre {
 	text-align: center;
 }
 
-dt{
-    font-weight: bold;
+dt {
+	font-weight: bold;
 }
+
+dd{
+    color: #808080;
+
+}
+
+address{
+    color: #808080;
+}
+
 footer p {
-	position: relative;
-	left: 550px;
-	bottom: 7px;
+    text-align: center;
 }
