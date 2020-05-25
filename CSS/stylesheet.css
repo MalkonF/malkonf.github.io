@@ -1,19 +1,36 @@
 body {
-    font-family: 'Work Sans', sans-serif;
-    padding: 6px;
-   }
-
-   h1{
-       font-size: 35px;
-   }
-   
-   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Crimson Text', serif;
-   }
-
-dt {
-	font-weight: bold;
+	font-family: 'Work Sans', sans-serif;
+	color: #00ff00;
+	padding: 6px;
+	background-color: #1c1c1c;
 }
-address p{
-    text-align: center;
+
+#home {
+	font-size: 20px;
+	text-align: center;
+	margin-left: 60px;
+	margin-right: 60px;
+}
+
+h1 {
+	color: #808080;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Crimson Text', serif;
+}
+
+pre {
+	text-align: center;
+}
+
+footer p {
+	position: relative;
+	left: 550px;
+	bottom: 7px;
 }
