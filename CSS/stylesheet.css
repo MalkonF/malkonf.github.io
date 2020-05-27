@@ -5,19 +5,30 @@ body {
 	background-color: #1c1c1c;
 }
 
+#penguin{
+    font-family: serif;
+    color: yellow;
+}
+
 #home {
 	font-size: 18px;
 	text-align: center;
 	margin-left: 70px;
-	margin-right: 70px;
+    margin-right: 70px;
+    color: aquamarine;
+}
+
+#aside{
+    text-align: right;
 }
 
 #pgpleft{
     text-align: left;
 }
 
-h1 {
-	color: #808080;
+h1, h2 {
+    color: #808080;
+    display: inline;
 }
 
 h1,
