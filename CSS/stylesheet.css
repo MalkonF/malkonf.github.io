@@ -5,30 +5,27 @@ body {
 	background-color: #1c1c1c;
 }
 
-#penguin{
-    font-family: serif;
-    color: yellow;
+#penguin {
+	font-family: serif;
+	color: yellow;
 }
 
 #home {
 	font-size: 18px;
 	text-align: center;
 	margin-left: 70px;
-    margin-right: 70px;
-    color: aquamarine;
+	margin-right: 70px;
+	color: aquamarine;
 }
 
-#aside{
-    text-align: right;
+#pgpleft {
+	text-align: left;
 }
 
-#pgpleft{
-    text-align: left;
-}
-
-h1, h2 {
-    color: #808080;
-    display: inline;
+h1,
+h2 {
+	color: #808080;
+	display: inline;
 }
 
 h1,
@@ -55,15 +52,15 @@ dt {
 	font-weight: bold;
 }
 
-dd{
-    color: #808080;
-
+dd {
+	color: #808080;
 }
 
-address{
-    color: #808080;
+address {
+	color: #808080;
 }
 
 footer p {
-    text-align: center;
+	text-align: center;
+	color: #808080;
 }
