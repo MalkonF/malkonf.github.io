@@ -17,9 +17,29 @@ body {
 	margin-right: 70px;
 	color: aquamarine;
 }
+#home a {
+	text-decoration: none;
+	color: aquamarine;
+}
 
 #pgpleft {
 	text-align: left;
+}
+
+#links {
+	text-decoration: none;
+	color: #00ff00;
+}
+
+a:link {
+	color: white;
+}
+a:hover {
+	color: green;
+}
+
+abbr {
+	text-decoration: none;
 }
 
 h1,
@@ -63,4 +83,10 @@ address {
 footer p {
 	text-align: center;
 	color: #808080;
+}
+
+footer p span {
+	font: 18px Arial, sans-serif;
+	display: inline-block;
+	transform: rotate(180deg);
 }
