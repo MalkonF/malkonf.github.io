@@ -4,11 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="twitter:title" content="Instalando e configurando o SSH(Secure Shell) Authentication Protocol no Debian 10 Buster">
-  <meta name="twitter:description"
-    content="Instalando e configurando SSH no Debian Buster">
-  <meta name="twitter:image"
-    content="https://github.com/MalkonF/malkonf.github.io/blob/master/IMG/me.JPG">
+  <meta name="twitter:title"
+    content="Instalando e configurando o SSH(Secure Shell) Authentication Protocol no Debian 10 Buster">
+  <meta name="twitter:description" content="Instalando e configurando SSH no Debian Buster">
+  <meta name="twitter:image" content="https://github.com/MalkonF/malkonf.github.io/blob/master/IMG/me.JPG">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="malkonf.github.io">
   <!-- Bootstrap CSS -->
@@ -58,7 +57,7 @@
 
         <div class="blog-post">
           <h2 class="blog-post-title">Instalando e configurando o SSH(Secure Shell) Authentication Protocol no Debian 10
-            "Buster"</h2>
+            "Buster" (Parte 1)</h2>
           <p class="blog-post-meta">12 de junho, 2020 por <a href="index.html">Malkon Faria</a></p>
 
           <h4>O que é o Protocolo de Autenticação de Shell Seguro?</h4>
@@ -96,6 +95,20 @@
 
           <p><a href="IMG/versao_ssh.png"><img src="IMG/versao_ssh.png" alt="versao do shh"></a></p>
 
+          <p>Agora, abra o arquivo de configuração do SSH e cheque se o método de autenticação está como senha. Veja na
+            imagem abaixo:</p>
+
+          <pre><code>
+            sudo nano /etc/ssh/sshd_config
+                </code></pre>
+
+          <p><a href="IMG/autenticacao_por_senha.png"><img src="IMG/autenticacao_por_senha.png"
+                alt="autenticação por senha ssh"></a></p>
+
+          <p>Pronto! Finalizamos os passos necessários para se instalar um servidor SSH, agora vamos configurar o
+            computador que
+            vai se conectar ao servidor SSH.</p>
+          </p>
           <p>No computador que você vai usar para se conectar ao servidor SSH, faça:</p>
           <pre><code>
           sudo apt-get update
@@ -120,11 +133,11 @@
 
           <p>por exemplo:</p>
           <pre><code>
-              ssh root 167.99.203.217
+          ssh -l root 167.99.203.217
             </pre></code>
           <p>ou:</p>
           <pre><code>
-                ssh root@167.99.203.217
+          ssh root@167.99.203.217
               </pre></code>
           <p>Após isso será requisitado a senha do usuário que você usou para logar. Veja na imagem abaixo:</p>
           <p><a href="IMG/logando_ssh.png"><img src="IMG/logando_ssh.png" alt="logando no ssh"></a></p>
@@ -145,7 +158,7 @@
 
         <nav>
           <ul class="pager">
-            <li><a href="#">Próximo</a></li>
+            <li><a href="blog1.html">Próximo</a></li>
           </ul>
         </nav>
 

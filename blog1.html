@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="CSS/blog.css" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+    <title>Blog - Malkon Faria - Sysadmin / Developer</title>
+</head>
+
+<body>
+    <div class="blog-masthead">
+        <div class="container">
+            <nav class="blog-nav">
+                <a class="blog-nav-item active" href="#">Home</a>
+                <a class="blog-nav-item" href="#">Programação</a>
+                <a class="blog-nav-item" href="sysadminindex.html">Sysadmin</a>
+                <a class="blog-nav-item" href="#">Segurança</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="blog-header">
+            <h1 class="blog-title"><span class="color-letter">E</span> l e t r o &nbsp <span
+                    class="color-letter">H</span> a c
+                k i n g</h1>
+            <p class="lead blog-description">Um blog sobre várias coisas relacionadas a TI</p>
+        </div>
+
+        <!--conteudo main-->
+        <div class="row">
+
+            <div class="col-sm-8 blog-main">
+
+                <div class="blog-post">
+                    <h2 class="blog-post-title">Instalando e configurando o SSH(Secure Shell) Authentication
+                        Protocol no Debian 10 "Buster"(Parte 2)</h2>
+                    <p class="blog-post-meta">22 de junho, 2020 por <a href="index.html">Malkon Faria</a></p>
+
+                    <h4>Configurando firewall: iptables </h4>
+                    <hr>
+                    <p>O iptables ou netfilter vem instalado por padrão na maioria das distribuições GNU/Linux, mas vale
+                        aqui diferenciar os dois softwares. Netfilter se diz respeito ao módulo que fornece ao kernel
+                        linux a capacidade de filtrar pacotes e traduzir endereços de rede(NAT). Já iptables é um
+                        software que permite a criação dessas regras de filtragem de pacotes e/ou NAT por um usuário.
+                        Então para usar o iptables, primeiro deve-se verificar se os módulos estão compilados e
+                        carregados. Para verificar se os módulos do iptables foram carregados, entre com comando:
+                    </p>
+                    <pre><code>    lsmod | grep ip_tables</code></pre>
+
+                    <p>Veja na imagem abaixo o nome dos módulos do iptables:</p>
+                    <p><a href="IMG/lsmod_ssh.png"><img src="IMG/lsmod_ssh.png" alt="lsmod ssh iptables"></a></p>
+
+                    <p><strong>Observação: Se não aparecer nenhum módulo, tente carregá-los com: </strong></p>
+                    <pre><code>    sudo modprobe ip_tables</code></pre>
+                    <p><strong>Caso não consiga, provavelmente o netfilter não foi compilado com kernel. Como este
+                            artigo não é exclusivamente sobre o funcionamento do iptables, ele não vai abordar o
+                            processo de compilação dos módulos junto ao kernel. Posteriormente este assunto será
+                            discutido junto com outro artigo sobre iptables.</strong></p>
+
+                    <p>Para verificar a versão do iptables entre com:</p>
+                    <pre><code>    sudo iptables -V
+                                </code></pre>
+
+                    <p><a href="IMG/versao_iptables.png"><img src="IMG/versao_iptables.png" alt="versao iptables"></a>
+                    </p>
+
+                    <p>Para verificar as regras do iptables entre com:
+                    </p>
+                    <pre><code>    sudo iptables -L</code></pre>
+                    <p><strong>Observação: Caso você não tenha usado o iptables ainda, não vai existir nenhum
+                            regra, como na imagem abaixo:</strong></p>
+                    <p><a href="IMG/regras_iptables.png"><img src="IMG/regras_iptables.png" alt="regras iptables"></a>
+                    </p>
+                    <p>Agora devemos criar as regras para permitir o acesso ao SSH no nosso servidor, mas
+                        antes vamos discorrer sobre o funcionamento do iptables.
+                        Falando de maneira breve e geral, a lógica de funcionamento do iptables se dá
+                        através de tabelas(tables) e cadeias(chains). O iptables é composto de 3 tabelas,
+                        mas só uma tabela nos interessa neste contexto, a tabela FILTER, que é a responsável
+                        por filtrar pacotes de rede. Dentro de cada tabela existem as cadeias. Na tabela
+                        FILTER existem 3 cadeias:
+                        <ul>
+                            <li>INPUT - corresponde aos pacotes de rede destinados ao ip do servidor que
+                                está rodando o iptables</li>
+                            <li>FORWARD - corresponde aos pacotes de rede que não foram gerados pelo
+                                servidor que está rodando o iptables e nem são destinados a ele</li>
+                            <li>OUTPUT - corresponde aos pacotes de rede que foram gerados a partir do
+                                servidor rodando o iptables</li>
+                    </p>
+                    </p>
+                    </ul>
+
+                    <p>O iptables basicamente inspeciona cada pacote que chega na interface de rede e verifica
+                        se existe alguma regra que se enquadra no contexto daquele pacote, se encontrar alguma
+                        regra correspondente, o iptables aplica uma ação com base na regra criada. Por exemplo,
+                        se o servidor está recebendo um pacote, a cadeia INPUT será a cadeia correspodente do
+                        pacote e as regras criadas dentro dessa cadeia é que vão valer para este pacote. Se o
+                        servidor está enviando um pacote, a cadeia OUTPUT será a cadeia correspondente ao pacote
+                        e as regras criadas dentro dessa cadeia é que vão valer para este pacote. Se na
+                        interface de rede existe um pacote que não foi criado pelo servidor e nem se destina a
+                        ele, a cadeia FORWARD será a correspondente do pacote e as regras criadas dentro dessa
+                        cadeia é que vão valer para este pacote. Vamos partir para um exemplo prático para
+                        melhor entendimento e criar uma regra:</p>
+
+                    <pre><code>    sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+                                </code></pre>
+
+                    <p>O que essa regra diz, a grosso modo, é que todos os pacotes que chegam ao servidor(-A
+                        INPUT) através do protocolo TCP/IP(-p tcp) na porta 22(--dport 22) serão aceitos(-j
+                        ACCEPT).</p>
+
+                    <p>Agora fez mais sentido o funcionamento do iptables, não?!
+                    </p>
+
+                    <p>Vale também lembrar que a ordem que estas regras aparecem fazem toda diferença no
+                        resultado final da filtragem de pacotes. Por exemplo, se você bloqueia todo o tráfego
+                        primeiro e só depois libera a porta 22, a liberação da porta 22 não terá efeito, pois
+                        todo o tráfego foi bloqueado primeiro, e os pacotes de rede vão ser descartados antes de
+                        alcançar a regra de liberação da porta 22.</p>
+
+                    <p>Exemplo:</p>
+                    <pre><code>    sudo iptables -A INPUT -j DROP
+                                </code></pre>
+                    <p>Essa regra diz que todos os pacotes que cheguem ao servidor(-A INPUT) são para serem
+                        bloqueados(-j DROP)</p>
+
+                    <p>Então, mesmo que exista a regra de liberação da porta 22, se ela vir depois dessa regra
+                        de bloqueio total, ela não terá efeito e ninguém será capaz de conectar ao servidor.
+                        Para facilitar a verificação da ordem das regras use o comando:</p>
+                    <pre><code>    sudo iptables --line-numbers  -L
+                                </code></pre>
+
+
+                    <h4>Liberando acesso via SSH no Iptables</h4>
+                    <hr>
+                    <pre><code>    sudo iptables -F 
+
+    sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+    sudo iptables -P INPUT DROP
+                            </code></pre>
+
+                    <p><strong>Observação: A opção -F apaga todas as regras que estão ativas no iptables. Se
+                            você tiver
+                            outras regras no servidor e não quiser apagá-las, não use essa opção, mas verifique
+                            se
+                            as novas regras não entrarão em conflito com as regras vigentes.</strong></p>
+                    <p><strong>Observação 2: A opção -P determina uma política padrão da chain que diz o que acontecerá
+                            com um
+                            pacote quando ele chegar ao final das regras contidas em uma chain, ou seja, se
+                            nenhuma regra adicionada a chain for correspondente com aquele pacote, a política
+                            padrão vai determinar o destino do pacote. Nesse caso acima, se o pacote de rede não
+                            corresponder com nenhuma regra ele será rejeitado pelo servidor, pois foi utilizada
+                            a opção DROP.</strong></p>
+                    <p><strong>Você pode escolher 2 modos de organização das regras: coloque a política como DROP e
+                            libere portas
+                            individualmente, ou coloque a política como ACCEPT e bloqueie portas específicas. Embora
+                            possam parecer
+                            a mesma coisa, existe uma pequena diferença entre esses modos de organização do firewall.
+                            Repare que
+                            quando colocamos a política como DROP todas as portas vão ser dropadas e elas ficam em
+                            estado FILTERED, ou seja,
+                            estão sendo filtradas pelo firewall, menos aquelas em que você liberou
+                            expressamente, veja na imagem abaixo:</strong></p>
+                    <p><a href="IMG/drop_iptables.png"><img src="IMG/drop_iptables.png" alt="drop iptables"></a></p>
+
+                    <p><strong>Agora, quando você deixa a política como ACCEPT e bloqueia portas específicas, o firewall
+                            somente vai filtrar as portas que você definiu especificamente.
+                            Em alguns exemplos no decorrer deste artigo vamos utilizar a abordagem de bloquear tudo e
+                            liberar portas específicas
+                            e em outros exemplos vamos utilizar a abordagem de liberar tudo e bloquear portas
+                            específicas. Tente identificar cada ocasião.</strong>
+                    </p>
+                    <p><a href="IMG/drop_iptables2.png"><img src="IMG/drop_iptables2.png" alt="drop iptables"></a></p>
+
+                    <p>A partir do momento da criação das regras o iptables já está em funcionamento, para
+                        verificar
+                        isso, vamos rodar o nmap que vai nos mostrar que ele está filtrando todas as 999 portas das 1000
+                        portas
+                        que foram escaneadas,
+                        menos a porta 22
+                        que é a porta que foi liberada, veja na imagem abaixo:
+                        <pre><code>
+    nmap -Pn 159.65.85.188
+                                        </code></pre>
+                        <p><a href="IMG/nmap.png"><img src="IMG/nmap.png" alt="scanner de rede nmap"></a>
+
+
+                        </p>
+
+
+                        <h4>Liberando acesso via SSH no Iptables para um host específico</h4>
+                        <hr>
+                        <pre><code>    sudo  iptables -F
+    sudo iptables -A INPUT -p tcp -m state --state ESTABLISHED --source 179.177.136.78 --dport 22 -j ACCEPT
+    sudo iptables -A INPUT -p tcp -m state --state NEW --source 193.180.177.13 --dport 22 -j ACCEPT
+    sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+    
+</code></pre>
+                        <p><strong>Observação: caso você esteja se conectando a partir de sua casa,
+                                provavelmente
+                                você recebe um ip dinâmico, ou seja, ele muda de tempo em tempo, então não seria
+                                uma
+                                boa idéia usar essa opção, pois quando mudar o ip, a sua máquina ficaria
+                                impossibilitada de se conectar.
+                                <p>Se você estiver conectado remotamente ao servidor que está configurando o SSH, terá
+                                    que adicionar
+                                    a regra com estado de conexão ESTABLISHED com o ip da sua conexão, pois senão ela
+                                    será cortada.</p></strong></p>
+
+                        <p>Dessa maneira, somente máquinas com endereço ip 193.180.177.13 poderão acessar o
+                            servidor
+                            via SSH</p>
+
+                        <p>A opção -m state permite que as regras de filtragem sejam aplicadas com base no
+                            estado da
+                            conexão. Ao todo são 4 estados:
+                            <ul>
+                                <li>NEW - É uma conexão nova que o servidor não conhece previamente. Por
+                                    exemplo, um
+                                    ip que
+                                    nunca conectou ao servidor e está conectando pela primeira vez enviando um
+                                    pacote SYN.</li>
+                                <li>RELATED - É uma conexão nova, mas está relacionada a outra conexão já
+                                    liberada
+                                    no
+                                    servidor. Por exemplo, conexões de dados FTP que são consideradas RELATED à
+                                    porta de
+                                    controle FTP(o protocolo FTP no seu funcionamento abre 2 portas, uma onde
+                                    trafegarão os
+                                    dados da conexão e outra porta os comandos e respostas de uma sessão FTP).
+                                    Isso
+                                    pode ser
+                                    usado para permitir que mensagens de erro de transferências FTP funcionem
+                                    corretamente
+                                    através do firewall.</li>
+                                <li>ESTABLISHED - É uma conexão que já foi estabelecida. Essa opção é muito
+                                    usada
+                                    quando
+                                    você está conectado a um servidor na nuvem e não quer derrubar a sua própria
+                                    conexão ao
+                                    criar uma regra. O único requisito para entrar em um estado ESTABLISHED é
+                                    que um
+                                    host
+                                    envie um pacote e, posteriormente, obtenha uma resposta do outro host.</li>
+                                <li>INVALID - Por alguma razão o tráfego não pôde ser identificado, ou seja, os
+                                    pacotes
+                                    desta conexão são desconhecidos pelo servidor e não se enquadram em nenhuma
+                                    das
+                                    3 opções
+                                    acima. Isso pode ser devido a vários motivos, como o sistema do servidor
+                                    ficar
+                                    sem
+                                    memória ou ter mensagens de erro ICMP que não correspondem a nenhuma conexão
+                                    conhecida.</li>
+                            </ul>
+                        </p>
+                        <h4>Liberando o acesso via SSH e limitando o número de tentativas de acesso a 2
+                            tentativas
+                            por
+                            minuto </h4>
+                        <hr>
+                        <pre><code>    sudo iptables -F
+
+    sudo iptables -I INPUT -p tcp --dport 22 -i eth0 -m state --state NEW -m recent --set
+    sudo iptables -I INPUT -p tcp --dport 22 -i eth0 -m state --state NEW -m recent   --update --seconds 60 --hitcount 2 -j DROP
+    sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+    sudo iptables -A INPUT -p udp --dport 22 -j ACCEPT
+
+    sudo iptables -P INPUT DROP
+                                </code></pre>
+
+                        <p>A opção -m recent --update --seconds 60 --hitcount 2 quer dizer que se durante 60
+                            segundos ter 2 tentativas de conexão a porta 22 a teceira tentativa será rejeitada.
+                        </p>
+
+
+                        <h4>Liberando o acesso via SSH e limitando o número de tentativas de acesso a 1
+                            tentativa
+                            por minuto</h4>
+                        <hr>
+                        <pre><code>    sudo iptables -F
+
+    sudo iptables -A INPUT -p tcp -m state --syn --state NEW --dport 22 -m limit --limit 2/minute --limit-burst 2 -j ACCEPT
+    sudo iptables -A INPUT -p tcp -m state --syn --state NEW --dport 22 -j DROP
+                                                            </code></pre>
+                        <p>Se tentar a conexão por mais de 2 vezes, a terceira tentativa será
+                            rejeitada.
+                        </p>
+
+                        <h4>Liberando acesso via SSH no Iptables para um host específico e limitando o número de
+                            tentativas de acesso a 1 tentativa por minuto</h4>
+                        <hr>
+                        <pre><code>    sudo iptables -F
+
+    sudo iptables -A INPUT -p tcp -s 193.180.177.13 -m state --syn --state NEW --dport 22 -m limit --limit 2/minute --limit-burst 2 -j ACCEPT
+    sudo iptables -A INPUT -p tcp -s 193.180.177.13 -m state --syn --state NEW --dport 22 -j DROP
+                                                                                            </code></pre>
+
+                        <h4>Logando conexões SSH</h4>
+                        <p>Podemos registrar todas as tentativas de acesso ao SSH no iptables. </p>
+                        <pre><code>    sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j LOG --log-prefix "Conexão SSH "</code></pre>
+                        <p>Para conferir o log, entre com:</p>
+                        <pre><code>sudo cat /var/log/messages | grep "Conexão SSH" </code></pre>
+                        <p>Ou para ver ao vivo os registros sendo criados, entre com:</p>
+                        <pre><code>   sudo tail -f /var/log/messages | grep "Conexão SSH" </code></pre>
+                        <p><a href="IMG/log_iptables.png"><img src="IMG/log_iptables.png"
+                                    alt="log iptables /var/messages"></a></p>
+                        <p>Cada linha desta significa um pacote de rede. Repare que podemos identificar vários campos
+                            dos pacotes,
+                            exemplo:
+                            <ul>
+                                <li>LEN - tamanho do pacote de rede</li>
+                                <li>ID - número de identificação do pacote</li>
+                                <li>PROTO - protocolo que foi usado na conexão</li>
+                                <li>SRC, DST - número ip de origem e destino do pacote</li>
+                            </ul>
+                        </p>
+                        <hr>
+                        <h4>Trick: Mudando a porta padrão de escuta do SSH</h4>
+                        <p>Com essa dica você pode confundir quem está tentando atacar seu servidor. A idéia é
+                            simples: você muda a porta padrão de escuta do SSH e bloqueia a porta 22 com o
+                            iptables.
+                            Isso dará impressão a quem estiver tentando atacar seu servidor que realmente existe
+                            um
+                            servidor de SSH rodando naquela porta.</p>
+
+                        <p>Para mudar a porta padrão de escuta do SSH, abra o arquivo /etc/ssh/sshd_config e
+                            mude o
+                            número na porta:</p>
+
+                        <pre><code>    sudo nano /etc/ssh/sshd_config
+                                </code></pre>
+
+                        <p><a href="IMG/porta_ssh.png"><img src="IMG/porta_ssh.png" alt="porta ssh"></a></p>
+                        <p>Agora reinicie o serviço:</p>
+
+                        <pre><code>    sudo /etc/init.d/ssh restart
+                                </code></pre>
+
+                        <p>Agora conecte com SSH especificando o número da porta:</p>
+                        <pre><code> 
+    sudo ssh -p 5801 root@159.65.85.188</code></pre>
+
+                        <p><strong>Observação: escolha um número alto para dificultar mais ainda algum port
+                                scanner encontrar seu
+                                servidor ssh, isso porque por padrão os port scanners começam a analisar as
+                                portas
+                                mais baixas, como 21, 22, 53, 80 etc</strong></p>
+
+                        <p>Agora é só por um DROP na porta 22:</p>
+
+                        <pre><code>    sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+                                    </code></pre>
+
+                        <p>Repare que o nmap identificou a porta 22 como se tivesse um servidor SSH rodando com um
+                            firewall protegendo.
+                            E além disso ele identificou a porta 5801, que é a porta onde o SSH está rodando como se
+                            fosse um servidor VNC.
+                        </p>
+
+                        <p><a href="IMG/nmap_iptables.png"><img src="IMG/nmap_iptables.png" alt="nmap port fake"></a>
+                        </p>
+
+                        <h4>Salvando as regras</h4>
+
+                        <p>Para salvar as regras e aplicá-las durante o boot, instale o pacote abaixo:</p>
+                        <pre><code>    sudo apt-get install iptables-persistent
+                            </code></pre>
+
+                        <p>Feito isso, todas as regras que estiverem criadas vão estar automaticamente no arquivo
+                            rules.v4 e vão
+                            ser carregadas automaticamente no boot. Para ver as regras entre com:</p>
+                        <pre><code>    sudo nano /etc/iptables/rules.v4
+                            </code></pre>
+                        <p>Se quisermos testar o arquivo rules.v4 para procurar algum erro de sintaxe, entre com:</p>
+                        <pre><code>
+    sudo iptables-restore -t /etc/iptables/rules.v4
+                            </code></pre>
+                        <p>Veja que mudamos o nome da palavra filter para filterr e ele acusa o erro de sintaxe</p>
+                        <p><a href="IMG/erroiptables.png"><img src="IMG/erroiptables.png" alt="iptables error"></a>
+                        </p>
+                        <p>Com a segunda parte deste artigo, ensinamos como fazer uma configuração básica para utilizar
+                            o SSH junto
+                            com um firewall. Nas próximas partes deste artigo vamos ensinar como implementar métodos
+                            alternativos de autenticação, fazer tunelamento seguro de aplicações e demais
+                            configurações. Até lá, pessoal!!!
+                        </p>
+
+
+                </div><!-- /.blog-post -->
+
+                <nav>
+                    <ul class="pager">
+                        <li><a href="#">Próximo</a></li>
+                        <li><a href="indexblog.html">Voltar</a></li>
+                    </ul>
+                </nav>
+
+            </div><!-- /.blog-main -->
+
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>Sobre</h4>
+                    <img src="IMG/me.JPG" alt="malkon faria" width="110">
+                    <p>Olá, sou Malkon Faria, administrador de sistemas e desenvolvedor. Aqui falo sobre várias coisas
+                        relacionadas a TI(as vezes não resisto e escrevo sobre outras coisas também) :)
+                    </p>
+                </div>
+
+                <div class="sidebar-module">
+                    <h4>Estou também em</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/MalkonF">GitHub</a></li>
+                        <li><a href="https://twitter.com/RapazComum6">Twitter</a></li>
+                    </ol>
+                </div>
+            </div><!-- /.blog-sidebar -->
+
+        </div><!-- /.row -->
+    </div>
+
+
+
+    <footer class="blog-footer">
+        <p>Este blog foi construído utilizando <a href="https://getbootstrap.com/">Bootstrap</a> by <a
+                href="https://twitter.com/RapazComum6">@RapazComum6</a>.</p>
+        <p>
+            <a href="#">Voltar para o topo</a>
+        </p>
+    </footer>
+</body>
+
+</html>
