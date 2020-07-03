@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="twitter:title"
+        content="Instalando e configurando o SSH(Secure Shell) Authentication Protocol no Debian 10 Buster">
+    <meta name="twitter:description" content="Configurando autenticação via chaves de criptografia">
+    <meta name="twitter:image" content="https://github.com/MalkonF/malkonf.github.io/blob/master/IMG/me.JPG">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="malkonf.github.io">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="CSS/blog.css" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+    <title>Blog - Malkon Faria - Sysadmin / Developer</title>
+</head>
+
+<body>
+    <div class="blog-masthead">
+        <div class="container">
+            <nav class="blog-nav">
+                <a class="blog-nav-item active" href="#">Home</a>
+                <a class="blog-nav-item" href="#">Programação</a>
+                <a class="blog-nav-item" href="sysadminindex.html">Sysadmin</a>
+                <a class="blog-nav-item" href="#">Segurança</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="blog-header">
+            <h1 class="blog-title"><span class="color-letter">E</span> l e t r o &nbsp <span
+                    class="color-letter">H</span> a c
+                k i n g</h1>
+            <p class="lead blog-description">Um blog sobre várias coisas relacionadas a TI</p>
+        </div>
+
+        <!--conteudo main-->
+        <div class="row">
+
+            <div class="col-sm-8 blog-main">
+
+                <div class="blog-post">
+                    <h2 class="blog-post-title">Instalando e configurando o SSH(Secure Shell) Authentication Protocol no
+                        Debian 10
+                        "Buster" (Parte 4)</h2>
+                    <p class="blog-post-meta">28 de junho, 2020 por <a href="index.html">Malkon Faria</a></p>
+
+                    <h4>Configurando autenticação via chaves de criptografia</h4>
+                    <hr>
+
+                    <p>Para fazer autenticação via chaves de criptografia são utilizadas chaves assimétricas que são
+                        formadas pelo par de chaves pública/privada. A chave pública deve
+                        estar armazenada
+                        no servidor SSH remoto, enquanto que
+                        a chave privada deve estar armazenada no computador que vai
+                        se conectar ao servidor SSH. Dessa maneira a
+                        conexão só
+                        será estabelecida se a chave privada que está na sua máquina for correspondente a chave pública
+                        que está no servidor. Somente você poderá ter
+                        acesso a chave privada, porque
+                        é ela que permite nos autenticar no servidor remoto. </p>
+
+                    <h4>Como funciona a criptografia?</h4>
+                    <hr>
+
+                    <p>De um modo simples, criptografia significa cifrar um texto para que ele fique ininteligível para
+                        aquele que não
+                        possua o segredo para desencriptar o texto. Por exemplo, se existe um texto cifrado onde o
+                        segredo é trocar a letra
+                        a por i, as palavras que contenham a letra a no texto vão ficar ininteligíveis para quem não
+                        saiba do segredo. Arara
+                        no texto se tornaria Iriri e Ana, Ini. Então somente as pessoas que saibam desse segredo é que
+                        poderão entender corretamente
+                        o texto. Claro que este "protocolo" que usei para criptografar o texto é muito fraco. Qualquer
+                        análise superficial poderia descobrir o segredo
+                        facilmente.
+                    </p>
+                    <p>Na vida real são usados protocolos que são baseados em modelos matemáticos, como fatoração de
+                        números primos, dada a
+                        dificuldade de encontrar fatores primos de um número qualquer. O protocolo RSA que possui as
+                        iniciais dos seus criadores
+                        (Rivest-Shamir-Adleman) usa este modelo matemático para gerar as chaves públicas e privadas.
+                    </p>
+                    <p>Como diz a Wikipédia: <em>"...protocolo RSA cria uma chave pública baseada em dois números primos
+                            grandes, junto com um valor auxiliar. Os números primos devem ser mantidos secretos.
+                            Qualquer um pode usar a chave pública para encriptar a mensagem, mas com métodos atualmente
+                            publicados, e se a chave pública for muito grande, apenas alguém com o conhecimento dos
+                            números primos pode decodificar a mensagem de forma viável.</em>
+                    </p>
+                    <p>Os números primos e o valor auxiliar que foram usados para a geração da chave pública é que
+                        equivalem a chave
+                        privada. Então somente poderá decifrar a mensagem alguém que tenha a chave privada. E para
+                        tentar gerar uma chave
+                        privada sem conhecimento prévio dos números primos e do valor auxiliar que foram usados para
+                        gerar a chave pública
+                        não é uma tarefa nada fácil. Atualmente vários matemáticos se ocupam deste problema, que é
+                        conhecido como <a href="https://pt.wikipedia.org/wiki/Problema_RSA"> <em>"O problema RSA"</a>
+                        </em>.
+                    </p>
+
+                    <h4>Gerando as chaves de autenticação</h4>
+                    <p>Para gerar as chaves pública e privada que vamos usar para nos autenticar no servidor entre com:
+
+                    </p>
+                    <pre><code>    sudo ssh-keygen -t rsa -b 4096</code></pre>
+
+                    <p><strong>Observação: -b indica o tamanho em bits da chave que vamos gerar. A grosso modo, quanto
+                            maior for o tamanho da chave, mais segura ela é
+                            em relação à um ataque de força bruta, por exemplo.</strong>
+                        <p><strong>Observação 2: lembrando que a chave privada deverá estar armazenada no computador que
+                                vai ser usado
+                                para nos conectarmos ao servidor SSH, então por conveniência, a geração das chaves pode
+                                ser feito a partir dele
+                                senão você terá que copiar a chave privada para a máquina cliente que vai se conectar ao
+                                servidor SSH.
+                            </strong></p>
+                    </p>
+                    <p>Após isso várias perguntas serão feitas em relação à chave, como mostra a imagem abaixo:</p>
+                    <p><a href="IMG/gerarchavesautenticacao.png"><img src="IMG/gerarchavesautenticacao.png"
+                                alt="Gerando chaves de  autenticação SSH"></a></p>
+                    <p>Em <em>"Enter passphrase"</em> está pedindo para você criar uma senha para a chave privada. Se
+                        esta
+                        senha for criada, ela será requisitada a cada tentativa de conexão ao servidor SSH. A senha não
+                        é obrigatória, é
+                        só um recurso extra de segurança
+                        caso alguém tenha acesso a sua chave privada, assim ele só poderá utilizá-la se souber a senha.
+                        Se você guardar a sua chave
+                        em um local seguro, a senha não é necessária, até porque fica mais prático logar no servidor sem
+                        ser necessário digitar uma senha
+                        em todo login, afinal um dos motivos que utilizamos essa forma de login, além da segurança, é a
+                        praticidade de não ter que digitar senha
+                        a cada login. </p>
+                    <p>Perceba também na imagem acima que é mostrado os locais onde estão armazenadas a chave pública e
+                        privada.
+                        A chave privada está em: <em>/root/.ssh/id_rsa</em> e a chave pública em
+                        <em>/root/.ssh/id_rsa.pub</em>.
+                    </p>
+                    <h4>Copiando a chave pública para o servidor SSH</h4>
+                    <p>Agora vamos ter que copiar a nossa chave pública para dentro do arquivo
+                        <em>~/.ssh/authorized_keys</em>
+                        que está localizado
+                        no servidor remoto.
+                        Para isso entre com:
+                        <pre><code>
+   sudo ssh-copy-id root@157.245.64.58
+                            </code></pre>
+                    </p>
+
+                    <p><a href="IMG/copiandochave2.png"><img src="IMG/copiandochave2.png"
+                                alt="Copiando chave autenticação SSH"></a></p>
+
+                    <p>Pronto, a chave pública já está armazenada no servidor SSH remoto, mais especificamente no
+                        arquivo <em>
+                            ~/.ssh/authorized_keys </em>. Veja na imagem abaixo:
+
+                        <p><a href="IMG/chavepublica.png"><img src="IMG/chavepublica.png" alt="Chave publica SSH"></a>
+                        </p>
+
+                        </em></p>
+                    <h4>Mudando modo de autenticação para chave pública</h4>
+
+                    <p>Para colocar o SSH em modo de autenticação via chave de criptografia edite o arquivo de
+                        configuração
+                        :
+                    </p>
+                    <pre><code>
+   sudo nano /etc/ssh/sshd_config
+                            </code></pre>
+                    <p>E acrescente as seguintes linhas:</p>
+                    <p><a href="IMG/confssh.png"><img src="IMG/confssh.png" alt="Configuração autenticação SSH"></a></p>
+                    <ul>
+                        <li><strong>PermitRootLogin</strong> - Vamos temporariamente permitir logins de usuários root
+                            porque ainda não
+                            criamos nenhum usuário comum para logar.</li>
+                        <li><strong>PubkeyAuthentication yes</strong> - Estamos mudando o modo de autenticação por
+                            chaves públicas.</li>
+                        <li><strong>AuthorizedKeysFile</strong> - Indica o caminho do arquivo que guarda todas as chaves
+                            públicas autorizadas para login neste servidor.</li>
+                        <li><strong>PasswordAuthentication no</strong> - Desabilita o login via senha neste servidor.
+                        </li>
+                    </ul>
+
+                    <p>Pronto! Agora só reiniciar o serviço SSH no servidor e você poderá fazer login no servidor sem
+                        precisar digitar
+                        nenhuma senha.
+                    </p>
+
+                    <pre><code>
+   /etc/init.d/ssh restart
+                        </code></pre>
+
+                    <p>Para logar entre com:</p>
+
+                    <pre><code>   sudo ssh root@157.245.64.58</code></pre>
+
+                    <p><a href="IMG/known_hosts.png"><img src="IMG/known_hosts.png" alt="known_hosts SSH"></a></p>
+
+                    <p><strong>Observação: No primeiro login vai aparecer uma aviso alertando que o SSH na parte do
+                            cliente desconhece um
+                            host com aquele endereço IP
+                            e fingerprint e pergunta se você quer continuar. Ao escolher sim, o SSH na parte do cliente
+                            vai
+                            adicionar o fingerprint da chave pública do servidor SSH no arquivo
+                            ~/.ssh/known_hosts, assim nas próximas vezes este aviso não irá aparecer mais.</strong></p>
+                    <p><strong>Isso acontece
+                            porque o SSH na parte cliente checa a cada tentativa de conexão se o ip ou nome do host
+                            e seu fingerprint são os mesmos que estão armazenados no arquivo known_hosts da máquina cliente. Se nas próximas
+                            tentativas de conexão com aquele servidor
+                            ele emitir um aviso de alerta novamente, verifique com o administrador do servidor se o ip
+                            ou chave criptográfica foram trocados,
+                            se continuarem os mesmos, cuidado, pois você pode estar sofrendo um ataque do tipo
+                            man-in-the-middle, onde um servidor
+                            malicioso está tentando se passar pelo servidor verdadeiro para roubar suas
+                            credenciais.</strong></p>
+
+                            <p><strong>As chaves públicas do servidor estão armazenadas em <em>/etc/ssh/.</em>
+                                Para saber o fingerprint de um chave pública, no servidor SSH entre com:</strong>
+                                <pre><code>
+    ssh-keygen -lf ssh_host_ecdsa_key.pub
+                                </code></pre>
+                            </p>
+
+                    
+
+
+
+                    <p><a href="IMG/logandosemsenha.png"><img src="IMG/logandosemsenha.png"
+                                alt="autenticação sem senha SSH"></a></p>
+
+
+                    <p>Como pode ver na imagem acima, não é feita a solicitação de nenhum senha. A autenticação é feita
+                        somente
+                        via chave de criptografia.
+                    </p>
+
+                    <h4>Criando usuários comuns para login SSH</h4>
+
+                    <p>No servidor SSH devemos criar um usuário comum e atribuir uma senha para ele.</p>
+
+                    <pre><code>   adduser estudante
+                    </code></pre>
+
+                    <p><a href="IMG/adduser.png"><img src="IMG/adduser.png" alt="add user SSH"></a></p>
+
+                    <p><strong> Observação: vamos ter que mudar o modo de autenticação para senha novamente, já que para
+                            poder adicionar a chave pública
+                            no servidor, tem que haver autenticação de algum modo, seja por chaves ou senha. Mas como
+                            ainda não temos a chave pública
+                            para este novo usuário armazenada no servidor, só podemos nos autenticar por senha. Repita
+                            os passos que ensinamos anteriormente, só que desta vez comente as linhas
+                            <em>PubkeyAuthentication yes</em>
+                            e <em>AuthorizedKeysFile</em>, mude a linha <em>PasswordAuthentication no</em> para
+                            <em>PasswordAuthentication yes</em> e reinicie o servidor.
+                        </strong>
+                    </p>
+
+                    <p>Agora lá no cliente, ou seja, o computador que vai se conectar ao servidor SSH, vamos copiar a
+                        chave pública
+                        para o servidor.
+                    </p>
+                    <pre><code>  sudo ssh-copy-id estudante@157.245.64.58</code></pre>
+
+                    <p><a href="IMG/copiandochave.png"><img src="IMG/copiandochave.png" alt="copy id rsa SSH"></a></p>
+
+                    <p>Para finalizar, edite o arquivo de configuração do SSH <em>/etc/ssh/sshd_config</em> e configure
+                        para o modo de autenticação por chave de criptografia, como ensinamos no começo desse artigo.
+                        Agora já pode logar com o usuário criado:</p>
+
+                    <pre><code>   sudo ssh estudante@157.245.64.58
+                        </code></pre>
+
+                    <p>Com a quarta parte deste artigo, ensinamos como configurar a autenticação por chaves de
+                        criptografia. Nas próximas partes deste artigo vamos ensinar
+                        como fazer tunelamento seguro de aplicações e
+                        demais configurações. Até lá, pessoal!!!</p>
+
+
+
+                </div><!-- /.blog-post -->
+
+                <nav>
+                    <ul class="pager">
+                        <li><a href="blog4.html">Próximo</a></li>
+                        <li><a href="blog2.html">Voltar</a></li>
+                    </ul>
+                </nav>
+
+            </div><!-- /.blog-main -->
+
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>Sobre</h4>
+                    <img src="IMG/me.JPG" alt="malkon faria" width="110">
+                    <p>Olá, sou Malkon Faria, administrador de sistemas e desenvolvedor. Aqui falo sobre várias coisas
+                        relacionadas a TI(as vezes não resisto e escrevo sobre outras coisas também) :)
+                    </p>
+                </div>
+
+                <div class="sidebar-module">
+                    <h4>Estou também em</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/MalkonF">GitHub</a></li>
+                        <li><a href="https://twitter.com/RapazComum6">Twitter</a></li>
+                    </ol>
+                </div>
+            </div><!-- /.blog-sidebar -->
+
+        </div><!-- /.row -->
+    </div>
+
+
+
+    <footer class="blog-footer">
+        <p>Este blog foi construído utilizando <a href="https://getbootstrap.com/">Bootstrap</a> by <a
+                href="https://twitter.com/RapazComum6">@RapazComum6</a>.</p>
+        <p>
+            <a href="#">Voltar para o topo</a>
+        </p>
+    </footer>
+</body>
+
+</html>
