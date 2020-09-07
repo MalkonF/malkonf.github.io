@@ -4,8 +4,10 @@
 	}
 
 	#pgpleft {
-		font-size: 25px;
+		font-size: 17px;
 	}
+
+	
 }
 
 @media only screen and (min-width: 992px) {
@@ -25,6 +27,7 @@ body {
 #penguin {
 	font-family: serif;
 	color: yellow;
+	text-align: center;
 }
 
 #home {
@@ -37,7 +40,13 @@ body {
 	color: #5f5f5f;
 }
 
-#pgpleft {
+#me{
+	font-size: 7px;
+	text-align: center;
+	
+}
+
+#pgpleft pre {
 	text-align: left;
 	font-size: 14px;
 }
@@ -84,11 +93,6 @@ nav {
 	display: block;
 	width: 350px;
 	margin: 0 auto;
-	text-align: center;
-}
-
-pre {
-	font-size: 7px;
 	text-align: center;
 }
 
