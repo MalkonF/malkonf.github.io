@@ -4,12 +4,8 @@
 		padding: 1px;
 	}
 
-	h1 {
-		text-align: center;
-	}
-
 	body {
-		width: 350px;
+		width: 390px;
 		margin: 0 auto;
 	}
 }
@@ -26,14 +22,11 @@ body {
 	color: #00ff00;
 	padding: 10px;
 	background-color: #1c1c1c;
-	
-	
-	
 }
 
 nav {
 	display: block;
-	width: 350px;
+	width: 390px;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -132,7 +125,7 @@ h6 {
 	width: 50px;
 	height: 50px;
 	float: left;
-	margin-left: 20px;
+	margin-left: 22px;
 	transition: all 0.4s ease-out;
 	border-radius: 50%;
 }
