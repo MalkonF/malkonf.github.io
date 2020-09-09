@@ -25,7 +25,8 @@
       serviços. Também sou desenvolvedor web/mobile
       desde 2015 e bastante comprometido com prazos e metodologias durante o processo de fabricação do software. Tenho
       graduação superior em Redes de Computadores pela <a href="https://universo.edu.br/">Universidade Salgado de
-        Oliveira.</a>
+        Oliveira</a> e atualmente estou cursando Análise de Sistemas na <a
+        href="https://portal.estacio.br/">Universidade Estácio de Sá.</a>
 
 
     </p>
@@ -38,7 +39,6 @@
     <a href="works.html"><span lang="en">Works</span></a>
     <a href="keys.html"><span lang="en">Public Key</span></a>
     <a href=blog0.html><span lang="en">Blog</span></a>
-    <a href="contact.html"><span lang="en">Contact</span></a>
 
   </nav>
 
@@ -78,6 +78,7 @@
 %%%%%%######%%&%&#((////////##%###############%######(#(%#//***/////(#%#%#%%%%%%
 %%%%&&%%%%%%%&&&%(/.*////////////(#######################////////((/(%#(/#%%%%%%
 </pre>
+
   <pre id="penguin">
         <h4 style="display:none;">Um pinguin feito em ASCII</h4>
     __
@@ -86,6 +87,40 @@
      \_\_>
     &quot; &quot;
   </pre>
+
+  <script>
+    let copiarGmail = () => {
+      //O texto que será copiado
+      const texto = "malkon.inf@gmail.com";
+      //Cria um elemento input (pode ser um textarea)
+      let inputTest = document.createElement("input");
+      inputTest.value = texto;
+      //Anexa o elemento ao body
+      document.body.appendChild(inputTest);
+      //seleciona todo o texto do elemento
+      inputTest.select();
+      //executa o comando copy
+      //aqui é feito o ato de copiar para a area de trabalho com base na seleção
+      document.execCommand('copy');
+      //remove o elemento
+      document.body.removeChild(inputTest);
+    };
+  </script>
+
+
+  <section id="menu">
+    <div class="contato" id="gmail"><img class="icone" src="IMG/contato/gmail2.png" onclick="copiarGmail()"></div>
+    <div class="contato" id="twitter"><a href="https://twitter.com/RapazComum6"><img class="icone"
+          src="IMG/contato/twitter2.png" /></a></div>
+    <div class="contato" id="workana"><a
+        href="https://www.workana.com/freelancer/6767cdc3b086b508b0decaed6a97a745?ref=user_dropdown"><img class="icone"
+          src="IMG/contato/workana.jpeg" /></a></div>
+    <div class="contato" id="linkedin"><a href="https://www.linkedin.com/in/malkon-faria-1843b81a7/"><img class="icone"
+          src="IMG/contato/linkedin.png" /></a></div>
+    <div class="contato" id="stack"><a href="https://stackoverflow.com/users/8553715/chmod777?tab=profile"><img
+          class="icone" src="IMG/contato/stack.png" /></a></div>
+  </section>
+
 
   <footer>
     <p>Malkon Faria - 2020<span>&copy;</span> - 🇧🇷 </p>
