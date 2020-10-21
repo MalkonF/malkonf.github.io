@@ -13,7 +13,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link href="CSS/blog.css" rel="stylesheet">
+  <link href="../CSS/blog.css" rel="stylesheet">
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -34,7 +34,7 @@
   <div class="blog-masthead">
     <div class="container">
       <nav class="blog-nav">
-        <a class="blog-nav-item active" href="#">Home</a>
+        <a class="blog-nav-item active" href="blog0.html">Home</a>
         <a class="blog-nav-item" href="#">Programação</a>
         <a class="blog-nav-item" href="sysadminindex.html">Sysadmin</a>
         <a class="blog-nav-item" href="#">Segurança</a>
@@ -58,7 +58,7 @@
         <div class="blog-post">
           <h2 class="blog-post-title">Instalando e configurando o SSH(Secure Shell) Authentication Protocol no Debian 10
             "Buster" (Parte 1)</h2>
-          <p class="blog-post-meta">12 de junho, 2020 por <a href="index.html">Malkon Faria</a></p>
+          <p class="blog-post-meta">12 de junho, 2020 por <a href="../index.html">Malkon Faria</a></p>
 
           <h4>O que é o Protocolo de Autenticação de Shell Seguro?</h4>
           <hr>
@@ -85,7 +85,7 @@
           sudo apt-get update
           sudo apt-get install openssh-server
           </code></pre>
-          <p><a href="IMG/instalando_ssh_debian.png"><img src="IMG/instalando_ssh_debian.png" alt="Instalando ssh"></a>
+          <p><a href="../IMG/instalando_ssh_debian.png"><img src="../IMG/instalando_ssh_debian.png" alt="Instalando ssh"></a>
           </p>
           <p><strong>Observação: se você ainda não sabe como habilitar o sudo para um usuário comum, consulte o
               artigo:<a href="blog4.html">Configurando sudo para usuário comum no Debian 10 Buster</a>
@@ -106,7 +106,7 @@
                 </code></pre>
           <p>Ele deve estar com status "running", isso significa que está pronto para aceitar conexões.</p>
 
-          <p><a href="IMG/versao_ssh.png"><img src="IMG/versao_ssh.png" alt="versao do shh"></a></p>
+          <p><a href="../IMG/versao_ssh.png"><img src="../IMG/versao_ssh.png" alt="versao do shh"></a></p>
 
           <p>Se o servidor onde está instalando o SSH for um servidor novo, talvez ainda não foi criada uma senha para o
             usuário root.
@@ -133,7 +133,7 @@
             sudo nano /etc/ssh/sshd_config
                 </code></pre>
 
-          <p><a href="IMG/autenticacao_por_senha.PNG"><img src="IMG/autenticacao_por_senha.PNG"
+          <p><a href="../IMG/autenticacao_por_senha.PNG"><img src="../IMG/autenticacao_por_senha.PNG"
                 alt="autenticação por senha ssh"></a></p>
 
           <p>Após a alteração, reinicie o servidor ssh com:</p>
@@ -148,9 +148,9 @@
           sudo apt-get install openssh-client
           </code></pre>
           </p>
-          <p><a href="IMG/instalando_ssh_cliente1.png"><img src="IMG/instalando_ssh_cliente1.png"
+          <p><a href="../IMG/instalando_ssh_cliente1.png"><img src="../IMG/instalando_ssh_cliente1.png"
                 alt="instalando ssh cliente"></a></p>
-          <p><a href="IMG/instalando_ssh_cliente2.png"><img src="IMG/instalando_ssh_cliente2.png"
+          <p><a href="../IMG/instalando_ssh_cliente2.png"><img src="../IMG/instalando_ssh_cliente2.png"
                 alt="instalando ssh cliente"></a></p>
 
           <h4>Como faço para me conectar?</h4>
@@ -173,7 +173,7 @@
           ssh root@167.99.203.217
               </pre></code>
           <p>Após isso será requisitado a senha do usuário que você usou para logar. Veja na imagem abaixo:</p>
-          <p><a href="IMG/logando_ssh.png"><img src="IMG/logando_ssh.png" alt="logando no ssh"></a></p>
+          <p><a href="../IMG/logando_ssh.png"><img src="../IMG/logando_ssh.png" alt="logando no ssh"></a></p>
 
           <p><strong>Observação: não é um procedimento seguro logar como root em conexões SSH. Nos próximos capítulos
               deste
@@ -207,7 +207,7 @@
       <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
         <div class="sidebar-module sidebar-module-inset">
           <h4>Sobre</h4>
-          <img src="IMG/me.JPG" alt="malkon faria" width="110">
+          <img src="../IMG/me.JPG" alt="malkon faria" width="110">
           <p>Olá, sou Malkon Faria, administrador de sistemas e desenvolvedor. Aqui falo sobre várias coisas
             relacionadas a TI(as vezes não resisto e escrevo sobre outras coisas também) :)
           </p>

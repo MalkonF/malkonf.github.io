@@ -13,7 +13,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="CSS/blog.css" rel="stylesheet">
+    <link href="../CSS/blog.css" rel="stylesheet">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -34,7 +34,7 @@
     <div class="blog-masthead">
         <div class="container">
             <nav class="blog-nav">
-                <a class="blog-nav-item active" href="#">Home</a>
+                <a class="blog-nav-item active" href="blog0.html">Home</a>
                 <a class="blog-nav-item" href="#">Programação</a>
                 <a class="blog-nav-item" href="sysadminindex.html">Sysadmin</a>
                 <a class="blog-nav-item" href="#">Segurança</a>
@@ -60,7 +60,7 @@
                     <h2 class="blog-post-title">Instalando e configurando o SSH(Secure Shell) Authentication Protocol no
                         Debian 10
                         "Buster" (Parte 4)</h2>
-                    <p class="blog-post-meta">28 de junho, 2020 por <a href="index.html">Malkon Faria</a></p>
+                    <p class="blog-post-meta">28 de junho, 2020 por <a href="../index.html">Malkon Faria</a></p>
 
                     <h4>Configurando autenticação via chaves de criptografia</h4>
                     <hr>
@@ -133,7 +133,7 @@
                             </strong></p>
                     </p>
                     <p>Após isso várias perguntas serão feitas em relação à chave, como mostra a imagem abaixo:</p>
-                    <p><a href="IMG/gerarchavesautenticacao.png"><img src="IMG/gerarchavesautenticacao.png"
+                    <p><a href="../IMG/gerarchavesautenticacao.png"><img src="../IMG/gerarchavesautenticacao.png"
                                 alt="Gerando chaves de  autenticação SSH"></a></p>
                     <p>Em <em>"Enter passphrase"</em> está pedindo para você criar uma senha para a chave privada. Se
                         esta
@@ -163,14 +163,14 @@
                             </code></pre>
                     </p>
 
-                    <p><a href="IMG/copiandochave2.png"><img src="IMG/copiandochave2.png"
+                    <p><a href="../IMG/copiandochave2.png"><img src="../IMG/copiandochave2.png"
                                 alt="Copiando chave autenticação SSH"></a></p>
 
                     <p>Pronto, a chave pública já está armazenada no servidor SSH remoto, mais especificamente no
                         arquivo <em>
                             ~/.ssh/authorized_keys </em>. Veja na imagem abaixo:
 
-                        <p><a href="IMG/chavepublica.png"><img src="IMG/chavepublica.png" alt="Chave publica SSH"></a>
+                        <p><a href="../IMG/chavepublica.png"><img src="../IMG/chavepublica.png" alt="Chave publica SSH"></a>
                         </p>
 
                         </em></p>
@@ -184,7 +184,7 @@
    sudo nano /etc/ssh/sshd_config
                             </code></pre>
                     <p>E acrescente as seguintes linhas:</p>
-                    <p><a href="IMG/confssh.png"><img src="IMG/confssh.png" alt="Configuração autenticação SSH"></a></p>
+                    <p><a href="../IMG/confssh.png"><img src="../IMG/confssh.png" alt="Configuração autenticação SSH"></a></p>
                     <ul>
                         <li><strong>PermitRootLogin</strong> - Vamos temporariamente permitir logins de usuários root
                             porque ainda não
@@ -210,7 +210,7 @@
 
                     <pre><code>   sudo ssh root@157.245.64.58</code></pre>
 
-                    <p><a href="IMG/known_hosts.png"><img src="IMG/known_hosts.png" alt="known_hosts SSH"></a></p>
+                    <p><a href="../IMG/known_hosts.png"><img src="../IMG/known_hosts.png" alt="known_hosts SSH"></a></p>
 
                     <p><strong>Observação: No primeiro login vai aparecer uma aviso alertando que o SSH na parte do
                             cliente desconhece um
@@ -241,7 +241,7 @@
 
 
 
-                    <p><a href="IMG/logandosemsenha.png"><img src="IMG/logandosemsenha.png"
+                    <p><a href="../IMG/logandosemsenha.png"><img src="../IMG/logandosemsenha.png"
                                 alt="autenticação sem senha SSH"></a></p>
 
 
@@ -257,7 +257,7 @@
                     <pre><code>   adduser estudante
                     </code></pre>
 
-                    <p><a href="IMG/adduser.png"><img src="IMG/adduser.png" alt="add user SSH"></a></p>
+                    <p><a href="../IMG/adduser.png"><img src="../IMG/adduser.png" alt="add user SSH"></a></p>
 
                     <p><strong> Observação: vamos ter que mudar o modo de autenticação para senha novamente, já que para
                             poder adicionar a chave pública
@@ -277,7 +277,7 @@
                     </p>
                     <pre><code>  sudo ssh-copy-id estudante@157.245.64.58</code></pre>
 
-                    <p><a href="IMG/copiandochave.png"><img src="IMG/copiandochave.png" alt="copy id rsa SSH"></a></p>
+                    <p><a href="../IMG/copiandochave.png"><img src="../IMG/copiandochave.png" alt="copy id rsa SSH"></a></p>
 
                     <p>Para finalizar, edite o arquivo de configuração do SSH <em>/etc/ssh/sshd_config</em> e configure
                         para o modo de autenticação por chave de criptografia, como ensinamos no começo desse artigo.
@@ -307,7 +307,7 @@
             <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 <div class="sidebar-module sidebar-module-inset">
                     <h4>Sobre</h4>
-                    <img src="IMG/me.JPG" alt="malkon faria" width="110">
+                    <img src="../IMG/me.JPG" alt="malkon faria" width="110">
                     <p>Olá, sou Malkon Faria, administrador de sistemas e desenvolvedor. Aqui falo sobre várias coisas
                         relacionadas a TI(as vezes não resisto e escrevo sobre outras coisas também) :)
                     </p>

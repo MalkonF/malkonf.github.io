@@ -14,7 +14,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="CSS/blog.css" rel="stylesheet">
+    <link href="../CSS/blog.css" rel="stylesheet">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -35,7 +35,7 @@
     <div class="blog-masthead">
         <div class="container">
             <nav class="blog-nav">
-                <a class="blog-nav-item active" href="#">Home</a>
+                <a class="blog-nav-item active" href="blog0.html">Home</a>
                 <a class="blog-nav-item" href="#">Programação</a>
                 <a class="blog-nav-item" href="sysadminindex.html">Sysadmin</a>
                 <a class="blog-nav-item" href="#">Segurança</a>
@@ -60,7 +60,7 @@
                 <div class="blog-post">
                     <h2 class="blog-post-title">Instalando e configurando o SSH(Secure Shell) Authentication
                         Protocol no Debian 10 "Buster"(Parte 2)</h2>
-                    <p class="blog-post-meta">22 de junho, 2020 por <a href="index.html">Malkon Faria</a></p>
+                    <p class="blog-post-meta">22 de junho, 2020 por <a href="../index.html">Malkon Faria</a></p>
 
                     <h4>Configurando firewall: iptables </h4>
                     <hr>
@@ -74,7 +74,7 @@
                     <pre><code>    lsmod | grep ip_tables</code></pre>
 
                     <p>Veja na imagem abaixo o nome dos módulos do iptables:</p>
-                    <p><a href="IMG/lsmod_ssh.png"><img src="IMG/lsmod_ssh.png" alt="lsmod ssh iptables"></a></p>
+                    <p><a href="../IMG/lsmod_ssh.png"><img src="../IMG/lsmod_ssh.png" alt="lsmod ssh iptables"></a></p>
 
                     <p><strong>Observação: Se não aparecer nenhum módulo, tente carregá-los com: </strong></p>
                     <pre><code>    sudo modprobe ip_tables</code></pre>
@@ -87,7 +87,7 @@
                     <pre><code>    sudo iptables -V
                                 </code></pre>
 
-                    <p><a href="IMG/versao_iptables.png"><img src="IMG/versao_iptables.png" alt="versao iptables"></a>
+                    <p><a href="../IMG/versao_iptables.png"><img src="../IMG/versao_iptables.png" alt="versao iptables"></a>
                     </p>
 
                     <p>Para verificar as regras do iptables entre com:
@@ -95,7 +95,7 @@
                     <pre><code>    sudo iptables -L</code></pre>
                     <p><strong>Observação: Caso você não tenha usado o iptables ainda, não vai existir nenhum
                             regra, como na imagem abaixo:</strong></p>
-                    <p><a href="IMG/regras_iptables.png"><img src="IMG/regras_iptables.png" alt="regras iptables"></a>
+                    <p><a href="../IMG/regras_iptables.png"><img src="../IMG/regras_iptables.png" alt="regras iptables"></a>
                     </p>
                     <p>Agora devemos criar as regras para permitir o acesso ao SSH no nosso servidor, mas
                         antes vamos discorrer sobre o funcionamento do iptables.
@@ -186,7 +186,7 @@
                             estado FILTERED, ou seja,
                             estão sendo filtradas pelo firewall, menos aquelas em que você liberou
                             expressamente, veja nas imagens abaixo:</strong></p>
-                    <p><a href="IMG/drop_iptables.png"><img src="IMG/drop_iptables.png" alt="drop iptables"></a></p>
+                    <p><a href="../IMG/drop_iptables.png"><img src="../IMG/drop_iptables.png" alt="drop iptables"></a></p>
 
                     <p><strong>Agora, quando você deixa a política como ACCEPT e bloqueia portas específicas, o firewall
                             somente vai filtrar as portas que você definiu especificamente.
@@ -195,7 +195,7 @@
                             e em outros exemplos vamos utilizar a abordagem de liberar tudo e bloquear portas
                             específicas. Tente identificar cada ocasião.</strong>
                     </p>
-                    <p><a href="IMG/drop_iptables2.png"><img src="IMG/drop_iptables2.png" alt="drop iptables"></a></p>
+                    <p><a href="../IMG/drop_iptables2.png"><img src="../IMG/drop_iptables2.png" alt="drop iptables"></a></p>
 
                     <p>A partir do momento da criação das regras o iptables já está em funcionamento, para
                         verificar
@@ -207,7 +207,7 @@
                         <pre><code>
     nmap -Pn 159.65.85.188
                                         </code></pre>
-                        <p><a href="IMG/nmap.png"><img src="IMG/nmap.png" alt="scanner de rede nmap"></a>
+                        <p><a href="../IMG/nmap.png"><img src="../IMG/nmap.png" alt="scanner de rede nmap"></a>
 
 
                         </p>
@@ -337,7 +337,7 @@
                         <pre><code>sudo cat /var/log/messages | grep "Conexão SSH" </code></pre>
                         <p>Ou para ver ao vivo os registros sendo criados, entre com:</p>
                         <pre><code>   sudo tail -f /var/log/messages | grep "Conexão SSH" </code></pre>
-                        <p><a href="IMG/log_iptables.png"><img src="IMG/log_iptables.png"
+                        <p><a href="../IMG/log_iptables.png"><img src="../IMG/log_iptables.png"
                                     alt="log iptables /var/messages"></a></p>
                         <p>Cada linha desta significa um pacote de rede. Repare que podemos identificar vários campos
                             dos pacotes,
@@ -372,7 +372,7 @@
                         <pre><code>    sudo nano /etc/ssh/sshd_config
                                 </code></pre>
 
-                        <p><a href="IMG/porta_ssh.png"><img src="IMG/porta_ssh.png" alt="porta ssh"></a></p>
+                        <p><a href="../IMG/porta_ssh.png"><img src="../IMG/porta_ssh.png" alt="porta ssh"></a></p>
                         <p>Agora reinicie o serviço:</p>
 
                         <pre><code>    sudo /etc/init.d/ssh restart
@@ -399,7 +399,7 @@
                             fosse um servidor VNC.
                         </p>
 
-                        <p><a href="IMG/nmap_iptables.png"><img src="IMG/nmap_iptables.png" alt="nmap port fake"></a>
+                        <p><a href="../IMG/nmap_iptables.png"><img src="../IMG/nmap_iptables.png" alt="nmap port fake"></a>
                         </p>
 
                         <h4>Salvando as regras</h4>
@@ -409,7 +409,7 @@
                             </code></pre>
 
                         <p>Vai aparecer uma mensagem durante a instalação perguntando se deseja salvar as regras atuais. Selecione sim.</p>
-                        <p><a href="IMG/saverulesiptables.png"><img src="IMG/saverulesiptables.png"
+                        <p><a href="../IMG/saverulesiptables.png"><img src="../IMG/saverulesiptables.png"
                                     alt="salvar regras iptables"></a>
                         </p>
 
@@ -425,7 +425,7 @@
                             </code></pre>
                         <p>Veja que mudamos o nome da palavra filter para filterr(com 2 r) e ele acusa o erro de
                             sintaxe.</p>
-                        <p><a href="IMG/erroiptables.png"><img src="IMG/erroiptables.png" alt="iptables error"></a>
+                        <p><a href="../IMG/erroiptables.png"><img src="../IMG/erroiptables.png" alt="iptables error"></a>
                         </p>
                         <p>Com a segunda parte deste artigo, ensinamos como fazer uma configuração básica para utilizar
                             o SSH junto
@@ -449,7 +449,7 @@
             <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 <div class="sidebar-module sidebar-module-inset">
                     <h4>Sobre</h4>
-                    <img src="IMG/me.JPG" alt="malkon faria" width="110">
+                    <img src="../IMG/me.JPG" alt="malkon faria" width="110">
                     <p>Olá, sou Malkon Faria, administrador de sistemas e desenvolvedor. Aqui falo sobre várias coisas
                         relacionadas a TI(as vezes não resisto e escrevo sobre outras coisas também) :)
                     </p>

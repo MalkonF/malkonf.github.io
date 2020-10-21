@@ -1,0 +1,13 @@
+#back {
+  transform: rotate(180deg);
+  display: inline-block;
+  font-size: 30px;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  color: #808080;
+}
